@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="StudyHub 10 - Class 10 educational resources.">
+  <title>StudyHub 10 | Educational Resources</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="#home">📚 StudyHub <b>10</b></a>
+    <button id="menuBtn" class="menu-btn">☰</button>
+    <nav id="mainNav">
+      <a href="#home">Home</a><a href="#resources">Resources</a>
+      <a href="#subjects">Subjects</a><a href="#admin">Admin</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">CLASS 10 • STUDY PORTAL</span>
+      <h1>All your study material in one place.</h1>
+      <p>Find syllabus, sample papers, tests, notes and important questions. The admin can upload new PDFs without changing the website code.</p>
+      <div class="hero-actions"><a class="btn primary" href="#resources">Explore Materials</a><a class="btn secondary" href="#admin">Admin Login</a></div>
+    </div>
+    <div class="hero-card"><div class="hero-card-top">📖 StudyHub 10</div><h3>Upload once. Publish instantly.</h3>
+      <div class="mini-stats"><span><b>PDF</b> Uploads</span><span><b>🔎</b> Search</span><span><b>📱</b> Mobile</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="resources">
+<div class="container">
+  <div class="section-heading"><div><span class="eyebrow">LIBRARY</span><h2>Study Materials</h2></div><span id="resultCount" class="result-count"></span></div>
+  <div class="controls">
+    <div class="search-wrap">🔎 <input id="searchInput" type="search" placeholder="Search materials..."></div>
+    <select id="subjectFilter"><option>All Subjects</option><option>Mathematics</option><option>Science</option><option>Social Science</option><option>English</option><option>Hindi</option></select>
+    <select id="typeFilter"><option>All Types</option><option>Syllabus</option><option>Sample Paper</option><option>Test</option><option>Notes</option><option>Questions</option></select>
+  </div>
+  <div id="resourceGrid" class="resource-grid"></div>
+  <div id="emptyState" class="empty-state hidden">🔍<h3>No materials found</h3><p>Try a different search or filter.</p></div>
+</div>
+</section>
+
+<section class="section light" id="subjects">
+<div class="container"><div class="section-heading"><div><span class="eyebrow">EXPLORE</span><h2>Subjects</h2></div></div>
+<div class="subject-grid">
+<button class="subject-card" data-subject="Mathematics">📐 <b>Mathematics</b><small>Practice & papers</small></button>
+<button class="subject-card" data-subject="Science">🔬 <b>Science</b><small>Physics, Chemistry & Biology</small></button>
+<button class="subject-card" data-subject="Social Science">🌍 <b>Social Science</b><small>History, Geography & Civics</small></button>
+<button class="subject-card" data-subject="English">📘 <b>English</b><small>Grammar & literature</small></button>
+<button class="subject-card" data-subject="Hindi">🪶 <b>Hindi</b><small>Literature & language</small></button>
+</div></div>
+</section>
+
+<section class="section" id="admin">
+<div class="container admin-box">
+  <div class="section-heading"><div><span class="eyebrow">PRIVATE AREA</span><h2>Admin Panel</h2></div></div>
+  <div id="loginPanel" class="panel">
+    <p class="muted">Sign in with the administrator email and password configured in Supabase.</p>
+    <div class="form-grid"><input id="email" type="email" placeholder="Admin email"><input id="password" type="password" placeholder="Password"></div>
+    <button id="loginBtn" class="btn primary">Sign In</button><p id="loginMsg" class="msg"></p>
+  </div>
+  <div id="adminPanel" class="panel hidden">
+    <div class="admin-head"><div><b id="adminEmail"></b><p class="muted">Upload a PDF and publish it to the library.</p></div><button id="logoutBtn" class="btn secondary">Sign Out</button></div>
+    <form id="uploadForm">
+      <div class="form-grid">
+        <input id="title" required maxlength="120" placeholder="Material title">
+        <select id="subject" required><option value="">Select subject</option><option>Mathematics</option><option>Science</option><option>Social Science</option><option>English</option><option>Hindi</option></select>
+        <select id="type" required><option value="">Material type</option><option>Syllabus</option><option>Sample Paper</option><option>Test</option><option>Notes</option><option>Questions</option></select>
+        <input id="description" maxlength="220" placeholder="Short description">
+      </div>
+      <label class="file-label">Choose PDF<input id="file" type="file" accept="application/pdf" required></label>
+      <button id="uploadBtn" class="btn primary" type="submit">Upload & Publish</button>
+      <p id="uploadMsg" class="msg"></p>
+    </form>
+  </div>
+</div>
+</section>
+</main>
+
+<footer><div class="container footer-content"><div><strong>📚 StudyHub 10</strong><p>Class 10 educational resources.</p></div><p>© <span id="year"></span> StudyHub 10</p></div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
