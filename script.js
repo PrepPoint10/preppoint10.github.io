@@ -1,12 +1,10 @@
-if (!window.supabase) {
-  alert("Supabase library did not load.");
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-const BUCKET = "materials";
+  const BUCKET = "materials";
 
 let resources = [];
 
@@ -123,3 +121,4 @@ supabase.auth.onAuthStateChange(() => updateAdminUI());
 document.getElementById("year").textContent = new Date().getFullYear();
 loadResources();
 updateAdminUI();
+});
