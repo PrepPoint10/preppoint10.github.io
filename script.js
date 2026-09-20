@@ -89,7 +89,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
   await supabase.auth.signOut();
   updateAdminUI();
 
-
+});
     document.getElementById("uploadForm").addEventListener("submit", async e => {
   e.preventDefault();
 
