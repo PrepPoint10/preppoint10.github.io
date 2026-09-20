@@ -1,5 +1,11 @@
-const { createClient } = window.supabase;
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+if (!window.supabase) {
+  alert("Supabase library did not load.");
+}
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 const BUCKET = "materials";
 
 let resources = [];
