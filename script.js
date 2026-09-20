@@ -88,40 +88,89 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 document.getElementById("logoutBtn").addEventListener("click", async () => {
   await supabase.auth.signOut();
   updateAdminUI();
-});
 
-document.getElementById("uploadForm").addEventListener("submit", async e => {
+
+    document.getElementById("uploadForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const msg = document.getElementById("uploadMsg"), btn = document.getElementById("uploadBtn");
+
+  const msg = document.getElementById("uploadMsg");
+  const btn = document.getElementById("uploadBtn");
+  const contentType = document.getElementById("contentType").value;
   const file = document.getElementById("file").files[0];
-  if (!file || file.type !== "application/pdf") { msg.textContent = "Please choose a PDF file."; return; }
-  if (file.size > 25 * 1024 * 1024) { msg.textContent = "Maximum PDF size is 25 MB."; return; }
+  const content = document.getElementById("content").value.trim();
 
-  btn.disabled = true; msg.textContent = "Uploading...";
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-  const path = `${crypto.randomUUID()}-${safeName}`;
+  if (contentType === "pdf") {
+    if (!file || file.type !== "application/pdf") {
+      msg.textContent = "Please choose a PDF file.";
+      return;
+    }
 
-  const upload = await supabase.storage.from(BUCKET).upload(path, file, {contentType:"application/pdf", upsert:false});
-  if (upload.error) { msg.textContent = upload.error.message; btn.disabled=false; return; }
+    if (file.size > 25 * 1024 * 1024) {
+      msg.textContent = "Maximum PDF size is 25 MB.";
+      return;
+    }
+  }
 
-  const { data: publicData } = supabase.storage.from(BUCKET).getPublicUrl(path);
+  if (contentType === "text" && !content) {
+    msg.textContent = "Please write some material.";
+    return;
+  }
+
+  btn.disabled = true;
+  msg.textContent = "Publishing...";
+
+  let fileUrl = null;
+  let storagePath = null;
+
+  if (contentType === "pdf") {
+    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    storagePath = `${crypto.randomUUID()}-${safeName}`;
+
+    const upload = await supabase.storage
+      .from(BUCKET)
+      .upload(storagePath, file, {
+        contentType: "application/pdf",
+        upsert: false
+      });
+
+    if (upload.error) {
+      msg.textContent = upload.error.message;
+      btn.disabled = false;
+      return;
+    }
+
+    const { data: publicData } = supabase.storage
+      .from(BUCKET)
+      .getPublicUrl(storagePath);
+
+    fileUrl = publicData.publicUrl;
+  }
+
   const row = {
     title: document.getElementById("title").value.trim(),
     subject: document.getElementById("subject").value,
     type: document.getElementById("type").value,
     description: document.getElementById("description").value.trim(),
-    file_url: publicData.publicUrl,
-    storage_path: path
+    content: contentType === "text" ? content : null,
+    file_url: fileUrl,
+    storage_path: storagePath
   };
 
   const insert = await supabase.from("materials").insert(row);
+
   if (insert.error) {
-    await supabase.storage.from(BUCKET).remove([path]);
-    msg.textContent = insert.error.message; btn.disabled=false; return;
+    if (storagePath) {
+      await supabase.storage.from(BUCKET).remove([storagePath]);
+    }
+
+    msg.textContent = insert.error.message;
+    btn.disabled = false;
+    return;
   }
 
   msg.textContent = "Published successfully!";
-  e.target.reset(); btn.disabled=false;
+  e.target.reset();
+  btn.disabled = false;
   await loadResources();
 });
 
