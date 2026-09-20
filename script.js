@@ -1,4 +1,12 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {  if (!window.supabase) {
+    alert("Supabase library did not load. Please reload the page.");
+    return;
+  }
+
+  if (typeof SUPABASE_URL === "undefined" || typeof SUPABASE_ANON_KEY === "undefined") {
+    alert("Supabase configuration did not load.");
+    return;
+  }
   const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
