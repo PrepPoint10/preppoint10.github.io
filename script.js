@@ -175,7 +175,7 @@ const insert = await supabase.from("materials").insert(row);
       await supabase.storage.from(BUCKET).remove([storagePath]);
     }
 
-    msg.textContent = insert.error.message;
+    msg.textContent = insert.error.message + " | JWT role: " + session.user.role;
     btn.disabled = false;
     return;
   }
