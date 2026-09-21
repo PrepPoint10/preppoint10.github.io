@@ -78,12 +78,13 @@
         <select id="type" required><option value="">Material type</option><option>Syllabus</option><option>Sample Paper</option><option>Test</option><option>Notes</option><option>Questions</option></select>
         <input id="description" maxlength="220" placeholder="Short description"><select id="contentType" required>
   <option value="pdf">📄 PDF</option>
-  <option value="text">📝 Text</option>
+<option value="image">🖼️ Image</option>
+<option value="text">📝 Text</option>
 </select>
 
 <textarea id="content" maxlength="20000" placeholder="Write your material here..."></textarea>
       </div>
-      <label class="file-label">Choose PDF<input id="file" type="file" accept="application/pdf"></label>
+      <label class="file-label">Choose PDF or Image<input id="file" type="file" accept=".pdf,image/*">
       <button id="uploadBtn" class="btn primary" type="submit">Upload & Publish</button>
       <p id="uploadMsg" class="msg"></p>
     </form>
