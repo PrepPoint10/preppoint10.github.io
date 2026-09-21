@@ -156,7 +156,19 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     storage_path: storagePath
   };
 
-  const insert = await supabase.from("materials").insert(row);
+ const { data: { session }, error: sessionError } =
+  await supabase.auth.getSession();
+
+if (sessionError || !session) {
+  msg.textContent = "Admin session missing. Please sign in again.";
+  btn.disabled = false;
+  return;
+}
+
+console.log("Authenticated user:", session.user.id);
+console.log("JWT role:", session.user.role);
+
+const insert = await supabase.from("materials").insert(row); 
 
   if (insert.error) {
     if (storagePath) {
