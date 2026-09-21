@@ -129,7 +129,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     const upload = await supabase.storage
       .from(BUCKET)
       .upload(storagePath, file, {
-        contentType: "application/pdf",
+        contentType: file.type,
         upsert: false
       });
 
