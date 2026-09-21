@@ -100,7 +100,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
   const content = document.getElementById("content").value.trim();
 
   if (contentType === "pdf" || contentType === "image") {
-    if (!file || file.type !== "application/pdf") {
+    if (!file || (contentType === "pdf" && file.type !== "application/pdf") || (contentType === "image" && !file.type.startsWith("image/"))) {
       msg.textContent = "Please choose a PDF file.";
       return;
     }
