@@ -122,7 +122,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
   let fileUrl = null;
   let storagePath = null;
 
-  if (contentType === "pdf") {
+  if (contentType === "pdf" || contentType === "image") {
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     storagePath = `${crypto.randomUUID()}-${safeName}`;
 
