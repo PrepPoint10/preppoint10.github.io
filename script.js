@@ -152,7 +152,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     type: document.getElementById("type").value,
     description: document.getElementById("description").value.trim(),
     content: contentType === "text" ? content : null,
-    file_url: fileUrl,
+    file_URL: fileUrl,
     storage_path: storagePath
   };
 
