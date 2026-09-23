@@ -22,6 +22,8 @@ const subjectFilter = document.getElementById("subjectFilter");
 const typeFilter = document.getElementById("typeFilter");
 const resultCount = document.getElementById("resultCount");
 const emptyState = document.getElementById("emptyState");
+const topLoader = document.getElementById("topLoader");                                                     
+                                                     
 
 function renderResources() {
   const q = searchInput.value.trim().toLowerCase();
@@ -48,11 +50,25 @@ function escapeHtml(value="") {
 }
 
 async function loadResources() {
-  const { data, error } = await supabase.from("materials").select("*").order("created_at", {ascending:false});
-  if (error) { grid.innerHTML = `<div class="panel">Could not load materials. Check your Supabase setup.</div>`; return; }
-  resources = data || [];
-  renderResources();
+  topLoader.classList.remove("done");
+  topLoader.classList.add("loading");
+
+  const { data, error } = await supabase
+    .from("materials")
+    .select("*")
+    .order("created_at", {ascending:false});
+
+  if (error) {
+    grid.innerHTML = `<div class="panel">Could not load materials. Check your Supabase setup.</div>`;
+  } else {
+    resources = data || [];
+    renderResources();
+  }
+
+  topLoader.classList.remove("loading");
+  topLoader.classList.add("done");
 }
+
 
 [searchInput, subjectFilter, typeFilter].forEach(x => x.addEventListener("input", renderResources));
 
