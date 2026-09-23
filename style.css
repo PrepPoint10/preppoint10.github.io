@@ -5,3 +5,35 @@
   object-fit: contain;
   display: block;
 }
+#topLoader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: #3157d5;
+  z-index: 9999;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+#topLoader.loading {
+  width: 70%;
+  animation: loadingLine 1.2s infinite ease-in-out;
+}
+
+#topLoader.done {
+  width: 100%;
+  opacity: 0;
+}
+
+@keyframes loadingLine {
+  0% {
+    transform: translateX(-20%);
+  }
+  50% {
+    transform: translateX(20%);
+  }
+  100% {
+    transform: translateX(80%);
+  }
+}
