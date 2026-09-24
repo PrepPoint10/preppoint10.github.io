@@ -86,7 +86,13 @@ document.getElementById("menuBtn").addEventListener("click", () => {
 async function updateAdminUI() {
   const { data: { session } } = await supabase.auth.getSession();
 
-  const isAdmin = session && session.user.id === "d681d9f7-8490-495d-96a4-7cb8586d5b3c";
+  const isAdmin = session &&
+    session.user.id === "d681d9f7-8490-495d-96a4-7cb8586d5b3c";
+
+  const adminSection = document.getElementById("admin");
+  const adminSectionRequested = window.location.hash === "#admin";
+
+  adminSection.classList.toggle("hidden", !adminSectionRequested);
 
   document.getElementById("loginPanel").classList.toggle("hidden", !!isAdmin);
   document.getElementById("adminPanel").classList.toggle("hidden", !isAdmin);
