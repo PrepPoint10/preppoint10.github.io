@@ -85,9 +85,15 @@ document.getElementById("menuBtn").addEventListener("click", () => {
 
 async function updateAdminUI() {
   const { data: { session } } = await supabase.auth.getSession();
-  document.getElementById("loginPanel").classList.toggle("hidden", !!session);
-  document.getElementById("adminPanel").classList.toggle("hidden", !session);
-  if (session) document.getElementById("adminEmail").textContent = session.user.email;
+
+  const isAdmin = session && session.user.id === "d681d9f7-8490-495d-96a4-7cb8586d5b3c";
+
+  document.getElementById("loginPanel").classList.toggle("hidden", !!isAdmin);
+  document.getElementById("adminPanel").classList.toggle("hidden", !isAdmin);
+
+  if (isAdmin) {
+    document.getElementById("adminEmail").textContent = session.user.email;
+  }
 }
 
 document.getElementById("loginBtn").addEventListener("click", async () => {
