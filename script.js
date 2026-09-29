@@ -222,7 +222,11 @@ updateAdminUI();
 // Record website visitor
 async function recordVisitor() {
   try {
-    await supabase.from("visitors").insert([{}]);
+    const { error } = await supabase.from("visitors").insert([{}]);
+
+if (error) {
+  console.error("Visitor tracking error:", error);
+}
   } catch (error) {
     console.error("Visitor tracking error:", error);
   }
