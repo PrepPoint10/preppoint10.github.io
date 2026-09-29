@@ -225,7 +225,8 @@ async function recordVisitor() {
     const { error } = await supabase.from("visitors").insert([{}]);
 
 if (error) {
-  console.error("Visitor tracking error:", error);
+  alert("Visitor tracking error: " + error.message);
+}
 }
   } catch (error) {
     console.error("Visitor tracking error:", error);
