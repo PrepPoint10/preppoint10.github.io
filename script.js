@@ -218,4 +218,9 @@ supabase.auth.onAuthStateChange(() => updateAdminUI());
 document.getElementById("year").textContent = new Date().getFullYear();
 loadResources();
 updateAdminUI();
+                                                     // Record website visitor
+supabase.from("visitors").insert([{}]).catch(error => {
+  console.error("Visitor tracking error:", error);
+});
+                                                     
 });
