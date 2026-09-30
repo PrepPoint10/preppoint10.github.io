@@ -219,18 +219,3 @@ document.getElementById("year").textContent = new Date().getFullYear();
 loadResources();
 updateAdminUI();
 });
-// Record website visitor
-async function recordVisitor() {
-  try {
-    const { error } = await supabase.from("visitors").insert([{}]);
-
-if (error) {
-  alert("Visitor tracking error: " + error.message);
-}
-}
-  } catch (error) {
-    console.error("Visitor tracking error:", error);
-  }
-}
-
-recordVisitor();
