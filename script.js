@@ -218,6 +218,24 @@ supabase.auth.onAuthStateChange(() => updateAdminUI());
 document.getElementById("year").textContent = new Date().getFullYear();
 loadResources();
 updateAdminUI();
+                                                     async function loadVisitorCount() {
+  const visitorCount = document.getElementById("visitorCount");
+  if (!visitorCount) return;
+
+  const { count, error } = await supabase
+    .from("visitors")
+    .select("*", { count: "exact", head: true });
+
+  if (error) {
+    console.error("Visitor count error:", error);
+    visitorCount.textContent = "👥 Total Visits: —";
+    return;
+  }
+
+  visitorCount.textContent = `👥 Total Visits: ${count ?? 0}`;
+}
+
+loadVisitorCount();
                                                      // Record website visitor
 supabase.from("visitors").insert([{}]).catch(error => {
   console.error("Visitor tracking error:", error);
